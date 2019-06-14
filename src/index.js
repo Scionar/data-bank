@@ -1,8 +1,16 @@
+const gql = require('fastify-gql');
+
 const fastify = require('./server.js');
 const routes = require('./routes');
 const swagger = require('./config/swagger');
+const schema = require('./schema');
 
 fastify.register(require('fastify-swagger'), swagger.options);
+
+fastify.register(gql, {
+  schema,
+  graphiql: true
+});
 
 routes.forEach((route, index) => {
   fastify.route(route);
