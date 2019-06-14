@@ -3,6 +3,8 @@ const fastify = require('fastify')({
 });
 const mongoose = require('mongoose');
 
+const routes = require('./routes');
+
 const databaseHost = process.env.DATABASE_HOST || 'localhost';
 const databaseName = process.env.DATABASE_NAME || 'databank';
 
@@ -13,6 +15,10 @@ mongoose
 
 fastify.get('/', async (request, reply) => {
   return { hello: 'world' };
+});
+
+routes.forEach((route, index) => {
+  fastify.route(route);
 });
 
 const start = async () => {
