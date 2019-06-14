@@ -17,15 +17,32 @@ const accountController = require('../controllers/accountController');
 // Define Object Types
 const accountType = new GraphQLObjectType({
   name: 'Account',
-  fields: () => ({})
+  fields: () => ({
+    _id: { type: GraphQLID },
+    username: { type: GraphQLString },
+    email: { type: GraphQLString },
+    password: { type: GraphQLString },
+    salt: { type: GraphQLString }
+  })
 });
 
 // Define Root Query
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    account: {},
-    accounts: {}
+    account: {
+      type: accountType,
+      args: { id: { type: GraphQLID } },
+      async resolve(parent, args) {
+        return await accountController.getSingleAccount(args);
+      }
+    },
+    accounts: {
+      type: new GraphQLList(accountType),
+      async resolve(parent, args) {
+        return await accountController.getAccounts();
+      }
+    }
   }
 });
 
