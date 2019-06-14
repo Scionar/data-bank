@@ -52,23 +52,39 @@ const Mutations = new GraphQLObjectType({
   fields: {
     addAccount: {
       type: accountType,
-      args: {},
-      async resolve(args) {
-        return '';
+      args: {
+        username: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) },
+        salt: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      async resolve(parent, args) {
+        const data = await accountController.addAccount(args);
+        return data;
       }
     },
     editAccount: {
       type: accountType,
-      args: {},
-      async resolve(args) {
-        return '';
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) },
+        username: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) },
+        salt: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      async resolve(parent, args) {
+        const data = await accountController.updateAccount(args);
+        return data;
       }
     },
     deleteAccount: {
       type: accountType,
-      args: {},
-      async resolve(args) {
-        return '';
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      async resolve(parent, args) {
+        const data = await accountController.deleteAccount(args);
+        return data;
       }
     }
   }

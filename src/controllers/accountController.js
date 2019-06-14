@@ -26,7 +26,7 @@ exports.getSingleAccount = async req => {
 // Add a new account
 exports.addAccount = async req => {
   try {
-    const account = new Account(req.body);
+    const account = new Account(req);
     return account.save();
   } catch (err) {
     throw boom.boomify(err);
