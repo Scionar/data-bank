@@ -8,5 +8,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^7.3.0",
+    "fastify": "^2.5.0",
+    "fastify-swagger": "^2.4.0",
+    "mongoose": "^5.5.15",
+    "nodemon": "^1.19.1"
+  }
 }
