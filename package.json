@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write  \"src/**/*.{js,jsx,json,scss}\""
+    "format": "prettier --write  \"src/**/*.{js,jsx,json,scss}\"",
+    "seed": "node ./src/helpers/seed.js"
   },
   "husky": {
     "hooks": {
