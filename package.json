@@ -2,9 +2,9 @@
   "name": "data-bank",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js ./src/index.js",
+    "start": "node src/index.js",
+    "start:dev": "./node_modules/nodemon/bin/nodemon.js ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write  \"src/**/*.{js,jsx,json,scss}\"",
     "seed": "node ./src/helpers/seed.js"
