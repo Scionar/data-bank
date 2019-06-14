@@ -1,7 +1,15 @@
 {
   "name": "data-bank",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
+  "author": "Joona Viertola (https://joonaviertola.com/)",
+  "keywords": [
+    "data",
+    "api",
+    "graphql",
+    "rest"
+  ],
+  "license": "GPL-3.0",
   "scripts": {
     "start": "node src/index.js",
     "start:dev": "./node_modules/nodemon/bin/nodemon.js ./src/index.js",
@@ -14,9 +22,6 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "boom": "^7.3.0",
     "fastify": "^2.5.0",
