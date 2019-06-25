@@ -29,7 +29,7 @@ exports.getSingleAccount = async req => {
 exports.addAccount = async req => {
   try {
     const salt = generateSalt(req.username);
-    const passwordHash = generateSalt(req.password, salt);
+    const passwordHash = generatePasswordHash(req.password, salt);
 
     const account = new Account({
       ...req,
@@ -37,6 +37,27 @@ exports.addAccount = async req => {
       password: passwordHash
     });
     return account.save();
+  } catch (err) {
+    throw boom.boomify(err);
+  }
+};
+
+// Add multiple accounts
+exports.addMultipleAccounts = async accountArray => {
+  try {
+    // Modify data before setting it
+    const data = accountArray.map(item => {
+      const salt = generateSalt(item.username);
+      const passwordHash = generateSalt(item.password, salt);
+
+      return {
+        ...item,
+        salt: salt,
+        password: passwordHash
+      };
+    });
+
+    return await Account.insertMany(data);
   } catch (err) {
     throw boom.boomify(err);
   }

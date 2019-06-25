@@ -2,7 +2,7 @@ const faker = require('faker');
 const boom = require('boom');
 
 const fastify = require('../server.js');
-const Account = require('../models/Account');
+const accountController = require('../controllers/accountController');
 
 const generateAccountData = () => {
   return new Array(50).fill().map(() => {
@@ -29,7 +29,9 @@ const generateAccountData = () => {
 fastify.ready().then(
   async () => {
     try {
-      const accounts = await Account.insertMany(generateAccountData());
+      const accounts = await accountController.addMultipleAccounts(
+        generateAccountData()
+      );
 
       console.log(`
       Data successfully added:
