@@ -1,5 +1,7 @@
 const boom = require('boom');
 
+const generateSalt = require('../utils/generateSalt');
+const generatePasswordHash = require('../utils/generatePasswordHash');
 const Account = require('../models/Account');
 
 // Get all accounts
@@ -26,7 +28,14 @@ exports.getSingleAccount = async req => {
 // Add a new account
 exports.addAccount = async req => {
   try {
-    const account = new Account(req);
+    const salt = generateSalt(req.username);
+    const passwordHash = generateSalt(req.password, salt);
+
+    const account = new Account({
+      ...req,
+      salt: salt,
+      password: passwordHash
+    });
     return account.save();
   } catch (err) {
     throw boom.boomify(err);
@@ -38,9 +47,15 @@ exports.updateAccount = async req => {
   try {
     const id = req.params === undefined ? req.id : req.params.id;
     const updateData = req.params === undefined ? req : req.params;
-    const update = await Account.findByIdAndUpdate(id, updateData, {
-      new: true
-    });
+
+    const salt = generateSalt(updateData.username);
+    const passwordHash = generateSalt(updateData.password, salt);
+
+    const update = await Account.findByIdAndUpdate(
+      id,
+      { ...updateData, salt: salt, password: passwordHash },
+      { new: true }
+    );
     return update;
   } catch (err) {
     throw boom.boomify(err);
