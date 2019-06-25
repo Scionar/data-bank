@@ -55,8 +55,7 @@ const Mutations = new GraphQLObjectType({
       args: {
         username: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
-        password: { type: new GraphQLNonNull(GraphQLString) },
-        salt: { type: new GraphQLNonNull(GraphQLString) }
+        password: { type: new GraphQLNonNull(GraphQLString) }
       },
       async resolve(parent, args) {
         const data = await accountController.addAccount(args);
@@ -69,8 +68,7 @@ const Mutations = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLString) },
         username: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
-        password: { type: new GraphQLNonNull(GraphQLString) },
-        salt: { type: new GraphQLNonNull(GraphQLString) }
+        password: { type: new GraphQLNonNull(GraphQLString) }
       },
       async resolve(parent, args) {
         const data = await accountController.updateAccount(args);
