@@ -1,5 +1,5 @@
-// Import our Controllers
 const accountController = require('../controllers/accountController');
+const sessionController = require('../controllers/sessionController');
 
 const routes = [
   {
@@ -26,6 +26,21 @@ const routes = [
     method: 'DELETE',
     url: '/api/accounts/:id',
     handler: accountController.deleteAccount
+  },
+  {
+    method: 'POST',
+    url: '/api/sessions',
+    handler: sessionController.addSession
+  },
+  {
+    method: 'GET',
+    url: '/api/sessions/:authKey',
+    handler: sessionController.findSession
+  },
+  {
+    method: 'DELETE',
+    url: '/api/sessions/:id',
+    handler: sessionController.deleteSession
   }
 ];
 
