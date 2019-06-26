@@ -13,6 +13,7 @@ const {
 
 // Import Controllers
 const accountController = require('../controllers/accountController');
+const sessionController = require('../controllers/sessionController');
 
 // Define Object Types
 const accountType = new GraphQLObjectType({
@@ -22,7 +23,25 @@ const accountType = new GraphQLObjectType({
     username: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
-    salt: { type: GraphQLString }
+    salt: { type: GraphQLString },
+    sessions: {
+      type: new GraphQLList(sessionType),
+      async resolve(parent, args) {
+        return await sessionController.findSessionsByAccountId({
+          id: parent._id
+        });
+      }
+    }
+  })
+});
+
+const sessionType = new GraphQLObjectType({
+  name: 'Session',
+  fields: () => ({
+    _id: { type: GraphQLID },
+    account_id: { type: GraphQLID },
+    key: { type: GraphQLString },
+    timestamp: { type: GraphQLString }
   })
 });
 
@@ -41,6 +60,19 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(accountType),
       async resolve(parent, args) {
         return await accountController.getAccounts();
+      }
+    },
+    session: {
+      type: sessionType,
+      args: { id: { type: GraphQLID } },
+      async resolve(parent, args) {
+        return await sessionController.getSingleSession(args);
+      }
+    },
+    sessions: {
+      type: new GraphQLList(sessionType),
+      async resolve(parent, args) {
+        return await sessionController.getSessions();
       }
     }
   }
@@ -82,6 +114,26 @@ const Mutations = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const data = await accountController.deleteAccount(args);
+        return data;
+      }
+    },
+    addSession: {
+      type: sessionType,
+      args: {
+        username: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      async resolve(parent, args) {
+        const data = await sessionController.addSession(args);
+        return data;
+      }
+    },
+    deleteSession: {
+      type: sessionType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      async resolve(parent, args) {
+        const data = await sessionController.deleteSession(args);
         return data;
       }
     }
