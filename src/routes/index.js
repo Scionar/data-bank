@@ -34,8 +34,8 @@ const routes = [
   },
   {
     method: 'GET',
-    url: '/api/sessions/:authKey',
-    handler: sessionController.findSession
+    url: '/api/sessions/:id',
+    handler: sessionController.getSingleSession
   },
   {
     method: 'DELETE',
