@@ -3,11 +3,13 @@ const fastify = require('fastify')({
 });
 const mongoose = require('mongoose');
 
-const databaseHost = process.env.DATABASE_HOST || 'localhost';
-const databaseName = process.env.DATABASE_NAME || 'databank';
+const connectString = process.env.DATABASE_CONNECTION_STRING;
+if (!connectString) {
+  throw new Error('No database string defined');
+}
 
 mongoose
-  .connect(`mongodb://${databaseHost}/${databaseName}`, {
+  .connect(connectString, {
     useNewUrlParser: true
   })
   .then(() => console.log('MongoDB connected...'))
