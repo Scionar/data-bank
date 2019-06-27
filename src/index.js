@@ -18,7 +18,7 @@ routes.forEach((route, index) => {
 
 const start = async () => {
   try {
-    const serverPort = process.env.SERVER_PORT || 3000;
+    const serverPort = process.env.SERVER_PORT || 80;
     const serverHost = process.env.SERVER_HOST || '0.0.0.0';
 
     await fastify.listen(serverPort, serverHost);
